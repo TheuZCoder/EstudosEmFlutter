@@ -45,7 +45,7 @@ class _CalculadoraState extends State<Calculadora> {
       }  else if (operacao == "Potencia"){
         resultado = pow(numero1, numero2) as double?; 
       } else if (operacao == "Raiz"){
-        if (numero1 <= 0 && numero2 % 2 != 0) {
+        if (numero1 >= 0 && numero2 % 2 != 0) {
         resultado = pow(numero1 , 1/numero2) as double?;
         }  else {
           _resultado = resultado != null ? 'O resultado é $resultado' : "Operação Invalida";
