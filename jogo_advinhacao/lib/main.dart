@@ -72,7 +72,7 @@ class _CalculadoraState extends State<Calculadora> {
             TextField(
               controller: _controllerNumero,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Numero'),
+              decoration: InputDecoration(labelText: 'Digite um Numero:'),
             ),
             SizedBox(height: 10.0),
             ElevatedButton(
