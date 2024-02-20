@@ -32,9 +32,7 @@ class _CalculadoraState extends State<Calculadora> {
   void _calcular(String operacao) {
     double Numero = double.tryParse(_controllerNumero.text) ?? 0.0;
     double? resultado;
-    Random random = Random();
-
-    int random_numero = random.nextInt(10) + 1;
+    int random_numero = Random(10) as int;
 
     setState(() {
     if (operacao == 'RESETAR') {
