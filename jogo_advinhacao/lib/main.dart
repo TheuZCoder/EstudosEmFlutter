@@ -44,7 +44,7 @@ class _CalculadoraState extends State<Calculadora> {
         _contadorTentativas = 1;
     }
     else if(Numero == random_numero) {
-      _resultado = 'PARABENS VC ACERTOU EM $_contadorTentativas';
+      _resultado = 'PARABENS VC ACERTOU EM $_contadorTentativas TENTATIVAS!!!';
       _mostrarBotao = true;
       
     }else {
