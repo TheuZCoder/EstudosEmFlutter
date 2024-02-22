@@ -26,13 +26,13 @@ class _CalculadoraState extends State<Calculadora> {
   TextEditingController _controllerNumero = TextEditingController();
   String _resultado = '';
   bool _mostrarBotao = false;
-  int _contadorTentativas = 0;
+  int _contadorTentativas = 1;
 
 
   void _calcular(String operacao) {
     double Numero = double.tryParse(_controllerNumero.text) ?? 0.0;
     double? resultado;
-    int random_numero = Random(10) as int;
+    int _random_numero = Random().nextInt(10) + 1;
 
     setState(() {
     if (operacao == 'RESETAR') {
@@ -41,12 +41,12 @@ class _CalculadoraState extends State<Calculadora> {
         _mostrarBotao = false;
         _contadorTentativas = 1;
     }
-    else if(Numero == random_numero) {
+    else if(Numero == _random_numero) {
       _resultado = 'PARABENS VC ACERTOU EM $_contadorTentativas TENTATIVAS!!!';
       _mostrarBotao = true;
       
     }else {
-      _resultado = "Você errou eu pensei no numero : $random_numero Tentativas: $_contadorTentativas";
+      _resultado = "Você errou eu pensei no numero : $_random_numero Tentativas: $_contadorTentativas";
       _mostrarBotao = false;
       _contadorTentativas++;
     }
