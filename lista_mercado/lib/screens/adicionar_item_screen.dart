@@ -28,7 +28,7 @@ class AdicionarItemScreen extends StatelessWidget {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                if (novoItem.isNotEmpty) {
+                if (novoItem.trim().isNotEmpty) {
                   onAdd(Item(novoItem, false));
                   Navigator.pop(context); // Voltar para a tela anterior
                 }
