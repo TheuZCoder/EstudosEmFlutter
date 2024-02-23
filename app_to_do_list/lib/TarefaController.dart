@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:app_to_do_list/TarefaModel.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +8,12 @@ class ListaTarefasController extends ChangeNotifier {
 
 //metodo crud
   void adicionarTarefa(String descricao) {
+    if (descricao == null || descricao.trim().isEmpty){
+
+    } else {
     _tarefas.add(Tarefa(descricao, false));
     notifyListeners();
+    }
   }
 
   void marcarComoConcluida(int indice){
