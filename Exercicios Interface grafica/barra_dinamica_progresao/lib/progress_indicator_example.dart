@@ -46,7 +46,7 @@ class _ProgressIndicatorExampleState extends State<ProgressIndicatorExample> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          
           children: [
             CustomProgressIndicator(value: _progressValue),
             SizedBox(height: 20.0),
