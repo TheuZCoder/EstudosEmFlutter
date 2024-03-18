@@ -38,17 +38,17 @@ class _MyTabbedPageState extends State<MyTabbedPage> {
         ),
         body: TabBarView(
           children: [
-            // Conteúdo para a Aba 1
+           
             Center(
               child: Text('Conteúdo da Aba 1'),
             ),
 
-            // Conteúdo para a Aba 2
+            
             Center(
               child: Text('Conteúdo da Aba 2'),
             ),
 
-            // Conteúdo para a Aba 3
+           
             Center(
               child: Text('Conteúdo da Aba 3'),
             ),

@@ -53,12 +53,11 @@ class _MyContactFormState extends State<MyContactForm> {
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                // Lógica para enviar o formulário
+                
                 String name = _nameController.text;
                 String email = _emailController.text;
                 String message = _messageController.text;
 
-                // Aqui você pode adicionar a lógica para enviar os dados do formulário
                 print('Nome: $name\nE-mail: $email\nMensagem: $message');
               },
               child: Text('Enviar'),
