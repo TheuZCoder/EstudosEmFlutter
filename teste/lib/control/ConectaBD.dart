@@ -8,8 +8,7 @@ Future<PostgreSQLConnection> conectarAoBancoDeDados() async {
     username: 'postgres',
     password: 'postgres',
   );
-
   await connection.open();
-
+  
   return connection;
 }
