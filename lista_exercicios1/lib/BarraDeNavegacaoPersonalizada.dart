@@ -22,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    // Substitua esses Widgets pelos seus próprios Widgets ou telas.
     Placeholder(key: PageStorageKey('Tab1')),
     Placeholder(key: PageStorageKey('Tab2')),
     Placeholder(key: PageStorageKey('Tab3')),

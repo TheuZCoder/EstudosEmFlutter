@@ -24,7 +24,6 @@ class _MyAnimatedButtonPageState extends State<MyAnimatedButtonPage> {
 
   void _onButtonPressed() {
     setState(() {
-      // Muda a margem e a cor ao ser clicado
       _marginLeft = _marginLeft == 0.0 ? 50.0 : 0.0;
       _buttonColor = _buttonColor == Colors.blue ? Colors.red : Colors.blue;
     });
