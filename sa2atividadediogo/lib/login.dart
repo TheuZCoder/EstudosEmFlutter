@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sa2atividadediogo/DataBaseHelper.dart';
+import 'package:sa2atividadediogo/cadastro.dart';
 import 'config.dart';
 
 class LoginPage extends StatelessWidget {
@@ -45,6 +46,16 @@ class LoginPage extends StatelessWidget {
                 }
               },
               child: Text('Login'),
+            ),
+             SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: Text('Registrar'),
             ),
           ],
         ),
