@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sa2atividadediogo/DataBaseHelper.dart';
 
 class RegisterPage extends StatelessWidget {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +28,26 @@ class RegisterPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Lógica para registrar novo usuário aqui
+              onPressed: () async {
+                String email = _emailController.text.trim();
+                String password = _passwordController.text.trim();
+                String confirmPassword = _confirmPasswordController.text.trim();
+
+                if (password == confirmPassword) {
+                  // Senha e confirmação de senha são iguais, proceder com o registro
+                  await DatabaseHelper.instance.insertUser({
+                    'email': email,
+                    'password': password,
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Usuário registrado com sucesso')),
+                  );
+                } else {
+                  // Senha e confirmação de senha não coincidem, exibir mensagem de erro
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('As senhas não coincidem')),
+                  );
+                }
               },
               child: Text('Registrar'),
             ),
