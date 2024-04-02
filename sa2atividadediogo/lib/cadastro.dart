@@ -1,5 +1,7 @@
+// RegisterPage
 import 'package:flutter/material.dart';
 import 'package:sa2atividadediogo/DataBaseHelper.dart';
+import 'package:sa2atividadediogo/model.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -16,13 +18,16 @@ class RegisterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(labelText: 'E-mail'),
             ),
             TextField(
+              controller: _passwordController,
               decoration: InputDecoration(labelText: 'Senha'),
               obscureText: true,
             ),
             TextField(
+              controller: _confirmPasswordController,
               decoration: InputDecoration(labelText: 'Confirmar Senha'),
               obscureText: true,
             ),
@@ -34,16 +39,13 @@ class RegisterPage extends StatelessWidget {
                 String confirmPassword = _confirmPasswordController.text.trim();
 
                 if (password == confirmPassword) {
-                  // Senha e confirmação de senha são iguais, proceder com o registro
-                  await DatabaseHelper.instance.insertUser({
-                    'email': email,
-                    'password': password,
-                  });
+                  await DatabaseHelper.instance.insertUser(
+                    User(email: email, password: password),
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Usuário registrado com sucesso')),
                   );
                 } else {
-                  // Senha e confirmação de senha não coincidem, exibir mensagem de erro
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('As senhas não coincidem')),
                   );
@@ -57,3 +59,5 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
+
+

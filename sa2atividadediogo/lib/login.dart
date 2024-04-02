@@ -1,7 +1,8 @@
+// LoginPage
 import 'package:flutter/material.dart';
 import 'package:sa2atividadediogo/DataBaseHelper.dart';
 import 'package:sa2atividadediogo/cadastro.dart';
-import 'config.dart';
+import 'package:sa2atividadediogo/config.dart';
 
 class LoginPage extends StatelessWidget {
   final DatabaseHelper _databaseHelper = DatabaseHelper.instance;
@@ -18,9 +19,11 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(labelText: 'E-mail'),
             ),
             TextField(
+              controller: _passwordController,
               decoration: InputDecoration(labelText: 'Senha'),
               obscureText: true,
             ),
@@ -34,12 +37,9 @@ class LoginPage extends StatelessWidget {
                 if (isAuthenticated) {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SettingsPage()), 
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
                   );
                 } else {
-                  
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('E-mail ou senha incorretos')),
                   );
@@ -47,7 +47,7 @@ class LoginPage extends StatelessWidget {
               },
               child: Text('Login'),
             ),
-             SizedBox(height: 10),
+            SizedBox(height: 10),
             TextButton(
               onPressed: () {
                 Navigator.push(
