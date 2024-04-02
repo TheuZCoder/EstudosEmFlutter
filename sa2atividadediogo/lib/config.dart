@@ -25,6 +25,10 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
+   Future<void> _logout() async {
+    await DatabaseHelper.instance.logout(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,15 +37,8 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
-            onPressed: () {
-              // Adicione aqui o código para realizar o logout do aplicativo
-              // Por exemplo, limpar o token de autenticação, remover dados do usuário da sessão, etc.
-              // Após o logout, você pode redirecionar o usuário para a tela de login ou outra tela inicial
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-            },
+            onPressed: _logout
+             ,
           ),
         ],
       ),
