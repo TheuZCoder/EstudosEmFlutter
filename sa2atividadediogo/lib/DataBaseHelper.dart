@@ -53,17 +53,27 @@ class DatabaseHelper extends ChangeNotifier {
     });
   }
 
+  Future<void> saveUserId(int userId) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setInt('userId', userId);
+}
+
+
   Future<bool> login(String email, String password) async {
-    final db = await database;
-    final List<Map<String, dynamic>> users = await db!.query(
-      'users',
-      where: 'email = ? AND password = ?',
-      whereArgs: [email, password],
-      
-    );
+  final db = await database;
+  final List<Map<String, dynamic>> users = await db.query(
+    'users',
+    where: 'email = ? AND password = ?',
+    whereArgs: [email, password],
+  );
+  if (users.isNotEmpty) {
     currentUserEmail = email;
-    return users.isNotEmpty;
+    saveUserId(users[0]['id']); // Salva o ID do usuário ao fazer login
+    return true;
   }
+  return false;
+}
+
 
   Future<List<Email>> loadEmails() async {
     Database db = await instance.database;
@@ -71,6 +81,10 @@ class DatabaseHelper extends ChangeNotifier {
     List<Email> emails = users.map((user) => Email.fromMap(user)).toList();
     return emails;
   }
+  Future<int?> getUserId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('userId');
+}
   
   Future<void> logout(BuildContext context) async {
     // Limpar dados de sessão local (por exemplo, nome de usuário)
