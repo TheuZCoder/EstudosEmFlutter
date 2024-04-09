@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:sa2atividadediogo/controller/DataBaseHelper.dart';
 import 'package:sa2atividadediogo/model/model.dart';
+import 'package:sa2atividadediogo/view/login.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,10 @@ class RegisterPage extends StatelessWidget {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Usuário registrado com sucesso')),
+                  );           
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -59,5 +65,3 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
-
-
