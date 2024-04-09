@@ -1,8 +1,8 @@
 // LoginPage
 import 'package:flutter/material.dart';
-import 'package:sa2atividadediogo/DataBaseHelper.dart';
-import 'package:sa2atividadediogo/cadastro.dart';
-import 'package:sa2atividadediogo/config.dart';
+import 'package:sa2atividadediogo/controller/DataBaseHelper.dart';
+import 'package:sa2atividadediogo/view/cadastro.dart';
+import 'package:sa2atividadediogo/view/config.dart';
 
 class LoginPage extends StatelessWidget {
   final DatabaseHelper _databaseHelper = DatabaseHelper.instance;

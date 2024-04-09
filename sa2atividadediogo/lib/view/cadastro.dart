@@ -1,7 +1,7 @@
 // RegisterPage
 import 'package:flutter/material.dart';
-import 'package:sa2atividadediogo/DataBaseHelper.dart';
-import 'package:sa2atividadediogo/model.dart';
+import 'package:sa2atividadediogo/controller/DataBaseHelper.dart';
+import 'package:sa2atividadediogo/model/model.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();

@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:sa2atividadediogo/login.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'model.dart'; // Importe os modelos User e Email
+import 'package:sa2atividadediogo/model/model.dart'; // Importe os modelos User e Email
+import 'package:sa2atividadediogo/view/login.dart';
 
 class DatabaseHelper extends ChangeNotifier {
   String? currentUserEmail;

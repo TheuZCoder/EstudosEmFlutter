@@ -1,18 +1,18 @@
 class User {
-  int? id; // Tornando o id opcional
+  int? id; 
 
   final String email;
   final String password;
 
   User({
-    this.id, // Deixando o id opcional
+    this.id, 
     required this.email,
     required this.password,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id, // Incluindo o id no mapa se não for nulo
+      'id': id, 
       'email': email,
       'password': password,
     };
