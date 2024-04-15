@@ -65,7 +65,7 @@ class DatabaseHelper extends ChangeNotifier {
     );
     if (users.isNotEmpty) {
       currentUserEmail = email;
-      saveUserId(users[0]['id']); // Salva o ID do usuário ao fazer login
+      saveUserId(users[0]['id']); 
       return true;
     }
     return false;
