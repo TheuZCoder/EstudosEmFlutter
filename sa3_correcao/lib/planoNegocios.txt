@@ -1,0 +1,10 @@
+-Tela login
+    -acessar(email/senha) => interna(lista de tarefas)
+    -registrar( => tela cadastro)
+- Tela cadastro
+    form(nome/email/senha)
+    -voltar(login)
+- Lista de tarefas
+    -Input para adicionar tarefas
+    -Apagar tarefas
+    -Listar tarefas

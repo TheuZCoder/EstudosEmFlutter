@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PaginaHome extends StatefulWidget {
@@ -14,7 +15,7 @@ class _PaginaHomeState extends State<PaginaHome> {
       _prefs; // Preferências compartilhadas para armazenar o estado do tema escuro
   bool _darkMode = false; // Estado atual do tema escuro
   String email;
-  String _idioma = 'pt-br';
+  String? _idioma;
 
   _PaginaHomeState({required this.email});
 
@@ -44,9 +45,9 @@ class _PaginaHomeState extends State<PaginaHome> {
 
   Future<void> _mudarIdioma() async {
     setState(() {
-      _idioma = widget.email;
+      //
     });
-    await _prefs.setString('${email}_idioma', _idioma);
+    await _prefs.setString('${email}_idioma', _idioma!);
   }
 
   @override
@@ -75,7 +76,7 @@ class _PaginaHomeState extends State<PaginaHome> {
               DropdownButton<String>(
                 value: _idioma,
                 onChanged: (value) {
-                  _mudarIdioma();
+                  _mudarIdioma(ValueKey(value));
                 },
                 items: <DropdownMenuItem<String>>[
                   DropdownMenuItem(
