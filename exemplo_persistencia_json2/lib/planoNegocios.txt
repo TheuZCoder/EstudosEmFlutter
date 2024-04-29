@@ -1,0 +1,15 @@
+Modelo de Produto
+    - nome
+    - preco
+    - categoria
+
+Controle de Produto
+    - load json(inicio) - assets/produtos.json
+
+View de Produtos
+    - Lista de produto(load json) - assets/produtos.
+    - Adicionar Produtos
+    - clicar produtos( abrir uma nova pagina)
+
+View Info Produto
+    - Informaçoes Produto Clicado
