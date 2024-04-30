@@ -1,0 +1,17 @@
+- Pag. Inicial
+    - Cadastrar Livros(botões) -> (Pag. Cadastro)
+    - Listar Livros(botões) -> (Pag. Listar)
+
+
+- Pag. Cadastro
+    - Formulario
+        - Id (Serial)
+        - Nome (Text)
+        - Descricao (Text)
+        - Quantidade (Int)
+        - Foto (Text)
+        - Preço(Double)
+        - Categorias[] (List<>)
+
+- Pag. Listar(???)
+    - Clicar no Produto -> (Pag. do Produto)
