@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routes: {
         '/home': (context) => const HomePage(),
-        '/cadastro': (context) => const CadastroPage(),
+        '/cadastro': (context) => const CadastrarLivrosView(),
         '/listar':(context) => const ListarLivrosPage(),
       },
     );

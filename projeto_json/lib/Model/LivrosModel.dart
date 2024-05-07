@@ -2,7 +2,7 @@ class Livros{
   final int id;
   final String titulo;
   final String autor;
-  final int sinopse;
+  final String sinopse;
   final String capa;
   final String editora;
   final double preco;

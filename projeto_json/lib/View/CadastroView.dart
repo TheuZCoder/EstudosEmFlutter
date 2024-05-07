@@ -1,67 +1,195 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class CadastroPage extends StatefulWidget {
-  const CadastroPage({super.key});
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:projeto_json/Controller/CadastroLivrosController.dart';
+import 'package:projeto_json/Model/LivrosModel.dart';
+
+class CadastrarLivrosView extends StatefulWidget {
+  const CadastrarLivrosView({super.key});
 
   @override
-  State<CadastroPage> createState() => _CadastroPageState();
+  State<CadastrarLivrosView> createState() => _CadastrarLivrosViewState();
 }
 
-class _CadastroPageState extends State<CadastroPage> {
- final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _quantityController = TextEditingController();
-  final TextEditingController _photoController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _categoriesController = TextEditingController();
+class _CadastrarLivrosViewState extends State<CadastrarLivrosView> {
+  LivrosController controller = LivrosController();
+  final _formKey = GlobalKey<FormState>();
+  final _tituloController = TextEditingController();
+  final _autorController = TextEditingController();
+  final _editoraController = TextEditingController();
+  final _sinopseController = TextEditingController();
+  final _categoriaController = TextEditingController();
+  final _isbnController = TextEditingController();
+  final _precoLivroController = TextEditingController();
+  final _controller = LivrosController();
+
+  File? _imageSelecionada;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro de Livros'),
+        title: const Text("Cadastro Livros"),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Nome do produto'),
+        padding: const EdgeInsets.all(12),
+        child: Center(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                      controller: _tituloController,
+                      decoration:
+                          const InputDecoration(labelText: "Titulo do Livro"),
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return "Titulo não pode ser vazio";
+                        } else {
+                          return null;
+                        }
+                      }),
+                  TextFormField(
+                      controller: _autorController,
+                      decoration:
+                          const InputDecoration(labelText: "Autor do Livro"),
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return "Autor não pode ser vazio";
+                        } else {
+                          return null;
+                        }
+                      }),
+                  TextFormField(
+                      controller: _editoraController,
+                      decoration:
+                          const InputDecoration(labelText: "editora do Livro"),
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return "editora não pode ser vazio";
+                        } else {
+                          return null;
+                        }
+                      }),
+                  TextFormField(
+                      controller: _sinopseController,
+                      decoration:
+                          const InputDecoration(labelText: "sinopse do Livro"),
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return "sinopse não pode ser vazio";
+                        } else {
+                          return null;
+                        }
+                      }),
+                  TextFormField(
+                      controller: _categoriaController,
+                      decoration: const InputDecoration(
+                          labelText: "categoria do Livro separe por ','"),
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return "categoria não pode ser vazio";
+                        } else {
+                          return null;
+                        }
+                      }),
+                  TextFormField(
+                      controller: _isbnController,
+                      decoration: const InputDecoration(
+                          labelText: "isbn do Livro separe por"),
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return "isbn não pode ser vazio";
+                        } else {
+                          return null;
+                        }
+                      }),
+                  TextFormField(
+                      controller: _precoLivroController,
+                      decoration:
+                          const InputDecoration(labelText: "preço do Livro"),
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return "preço não pode ser vazio";
+                        } else {
+                          return null;
+                        }
+                      }),
+                  _imageSelecionada != null
+                      ? Image.file(
+                          _imageSelecionada!,
+                          height: 150,
+                          width: 150,
+                          fit: BoxFit.cover,
+                        )
+                      : const SizedBox.shrink(),
+                  ElevatedButton(
+                    onPressed: () => _tirarFotoCapa(),
+                    child: const Text("Tirar foto"),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    child: const Text("Cadastrar"),
+                    onPressed: () => {
+                      if (_formKey.currentState!.validate()) {_cadastrarLivro()}
+                    },
+                  )
+                ],
+              ),
             ),
-            SizedBox(height: 12.0),
-            TextField(
-              controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Descrição'),
-            ),
-            SizedBox(height: 12.0),
-            TextField(
-              controller: _quantityController,
-              decoration: InputDecoration(labelText: 'Quantidade'),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 12.0),
-            TextField(
-              controller: _photoController,
-              decoration: InputDecoration(labelText: 'URL da Foto'),
-            ),
-            SizedBox(height: 12.0),
-            TextField(
-              controller: _priceController,
-              decoration: InputDecoration(labelText: 'Preço'),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
-            SizedBox(height: 12.0),
-            TextField(
-              controller: _categoriesController,
-              decoration: InputDecoration(labelText: 'Categorias (separadas por vírgula)'),
-            ),
-            SizedBox(height: 24.0),
-            //
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _tirarFotoCapa() async {
+    final image = ImagePicker();
+    final pickedfile = await image.pickImage(source: ImageSource.camera);
+    if (pickedfile != null) {
+      setState(() {
+        _imageSelecionada = File(pickedfile.path);
+      });
+    }
+  }
+
+  Future<void> _cadastrarLivro() async {
+    final livros = Livros(
+        id: controller.livros.length + 1,
+        titulo: _tituloController.text,
+        autor: _autorController.text,
+        editora: _editoraController.text,
+        sinopse: _sinopseController.text,
+        categoria: _categoriaController.text.split(","),
+        isbn: _isbnController.text,
+        preco: double.parse(_precoLivroController.text),
+        capa: _imageSelecionada!.path);
+    controller.addLivro(livros);
+    _controller.saveJson();
+    _cleanCampos();
+    //SNACKBAR
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Livro cadastrado com sucesso"),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _cleanCampos() {
+    _tituloController.clear();
+    _autorController.clear();
+    _editoraController.clear();
+    _sinopseController.clear();
+    _categoriaController.clear();
+    _isbnController.clear();
+    _precoLivroController.clear();
+    _imageSelecionada = null;
+    setState(() {});
   }
 }
