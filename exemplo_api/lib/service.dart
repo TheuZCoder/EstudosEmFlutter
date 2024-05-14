@@ -6,7 +6,7 @@ class WeatherService {
   final String baseUrl;
 
   WeatherService({required this.apiKey, required this.baseUrl});
-  
+
   Future<Map<String, dynamic>> getWeather(String city) async {
     // Constrói a URL completa para fazer a solicitação à API de previsão do tempo.
     final url = Uri.parse('$baseUrl/weather?q=$city&appid=$apiKey');
@@ -24,16 +24,19 @@ class WeatherService {
   }
 
   Future<Map<String, dynamic>> getWeatherbyLocation(num? lat, num? lon) async {
-    final url = Uri.parse('$baseUrl/weather?lat=${lat}&lon=${lon}&appid=${apiKey}');
+    final url =
+        Uri.parse('$baseUrl/weather?lat=${lat}&lon=${lon}&appid=${apiKey}');
     final response = await http.get(url);
     // Verifica se a resposta foi bem-sucedida (código de status 200).
     if (response.statusCode == 200) {
-     print(response.body);
+      print(response.body);
       // Se a resposta foi bem-sucedida, decodifica o corpo da resposta de JSON para um mapa.
       return jsonDecode(response.body);
     } else {
       // Se a resposta não foi bem-sucedida, lança uma exceção indicando o erro.
       throw Exception('Failed to load weather data');
     }
-}
+  }
+
+  
 }

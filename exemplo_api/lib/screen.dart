@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
+import 'package:charts_flutter/flutter.dart' as charts;
 // Importa o serviço WeatherService, que é responsável por obter os dados de previsão do tempo da API.
 import 'service.dart';
 
@@ -69,26 +70,50 @@ class _WeatherScreenState extends State<WeatherScreen> {
     };
   }
 
+  void _showTemperatureAlert(double temperature) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Alerta de Temperatura'),
+          content: Text(
+              'A temperatura está abaixo de 26 graus (${temperature.toStringAsFixed(2)} °C).'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fecha o diálogo de alerta.
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   // Método assíncrono para buscar os dados de previsão do tempo para uma cidade específica.
   Future<void> _fetchWeatherData() async {
-  try {
-    // Obtém a posição atual do usuário usando a API de geolocalização do navegador.
-    final position = await html.window.navigator.geolocation.getCurrentPosition();
-    final latitude = position.coords!.latitude;
-    final longitude = position.coords!.longitude;
+    try {
+      final position =
+          await html.window.navigator.geolocation.getCurrentPosition();
+      final latitude = position.coords!.latitude;
+      final longitude = position.coords!.longitude;
 
-    // Obtém os dados de previsão do tempo para a localização atual do usuário.
-    final weatherData = await _weatherService.getWeatherbyLocation(latitude, longitude);
+      final weatherData =
+          await _weatherService.getWeatherbyLocation(latitude, longitude);
 
-    // Atualiza o estado do widget com os novos dados de previsão do tempo.
-    setState(() {
-      _weatherData = weatherData;
-    });
-  } catch (e) {
-    // Em caso de erro ao obter a localização ou os dados de previsão do tempo, exibe uma mensagem de erro no console.
-    print('Error fetching weather data: $e');
+      setState(() {
+        _weatherData = weatherData;
+      });
+
+      // Verifica se a temperatura está abaixo de 20 graus e exibe o alerta, se necessário.
+      if (_weatherData['main']['temp'] - 273 < 26) {
+        _showTemperatureAlert(_weatherData['main']['temp'] - 273);
+      }
+    } catch (e) {
+      print('Error fetching weather data: $e');
+    }
   }
-}
 
   // Método responsável por construir a interface de usuário do widget.
   @override
