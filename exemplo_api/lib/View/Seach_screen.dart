@@ -119,14 +119,27 @@ class _SearchScreenStateState extends State<SearchScreenState> {
                 child: const Text('Search'),
                 
               ),
-              SizedBox(height: 20),
-              FutureBuilder(
-                future: _dbcontroller.list(),
-                builder: (context,snapshot){
-                  if(snapshot.hasData){
-                    
-                  }
-                })
+              const SizedBox(height: 20,),
+                      
+                    Expanded(
+                        child:FutureBuilder(
+                          future: _dbcontroller.list(), 
+                          builder: (context,snapshot){
+                            if(snapshot.connectionState == ConnectionState.done){
+                              return ListView.builder(
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index){
+                                  final city = snapshot.data![index];
+                                  return ListTile(
+                                    title: Text(city.cityName),
+                                    onTap: () {
+                                       findCity(city.cityName);
+                                    });
+                                });
+                            }else{
+                              return const Text("Sem Histórico");
+                            }
+                          }))
             ],
           ),
         ),
