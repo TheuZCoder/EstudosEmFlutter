@@ -21,9 +21,8 @@ class MyApp extends StatelessWidget {
       home: WeatherScreen(),
       routes: {
         '/home': (context) => WeatherScreen(),
-        '/favorites': (context) => FavoritesScreenState(),
-        '/search': (context) => SearchScreenState(),
-        '/details': (context) => DetailsScreenState(),
+        '/favorites': (context) => const FavoritesScreenState(),
+        '/search': (context) => const SearchScreenState(),
       },
     );
   }

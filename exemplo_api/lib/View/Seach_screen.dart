@@ -1,33 +1,38 @@
 import 'package:exemplo_api/Controller/Weather_Controller.dart';
+import 'package:exemplo_api/Controller/city_db_controller.dart';
+import 'package:exemplo_api/Model/CityModel.dart';
 import 'package:exemplo_api/Model/Weather_model.dart';
 import 'package:exemplo_api/Service/Weather_Service.dart';
+import 'package:exemplo_api/View/Details_weather_screen.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreenState extends StatefulWidget {
   const SearchScreenState({super.key});
 
   @override
-  State<SearchScreenState> createState() => SearchScreenStateState();
+  State<SearchScreenState> createState() => _SearchScreenStateState();
 }
 
-class SearchScreenStateState extends State<SearchScreenState> {
-  TextEditingController _cityController = new TextEditingController();
+class _SearchScreenStateState extends State<SearchScreenState> {
+  final TextEditingController _cityController = TextEditingController();
+  final CityDbController _dbcontroller = CityDbController();
   final _controller = WeatherController();
+  final _formKey = GlobalKey<FormState>();
 
   void _showTemperatureAlert(int temperature) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alerta de Temperatura'),
+          title: const Text('Alerta de Temperatura'),
           content: Text(
-              'A temperatura está abaixo de 26 graus (${temperature.toStringAsFixed(2)} °C).'),
+              'A temperatura está abaixo de 26 graus (${(temperature - 273).toStringAsFixed(2)} °C).'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Fecha o diálogo de alerta.
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -38,18 +43,47 @@ class SearchScreenStateState extends State<SearchScreenState> {
   Future<void> _fetchWeatherData() async {
     try {
       final city = _cityController.text;
+      if (city.isEmpty) return;
 
-      final weatherData =
-          await WeatherService().getWeather(city);
+      final weatherData = await WeatherService().getWeather(city);
       setState(() {
         _controller.weatherList.add(Weather.fromJson(weatherData));
       });
-      // Verifica se a temperatura está abaixo de 20 graus e exibe o alerta, se necessário.
-      if (weatherData['main']['temp'] - 273 < 26) {
-        _showTemperatureAlert(weatherData['main']['temp'] - 273);
+
+      final temperature = weatherData['main']['temp'];
+      if (temperature != null && temperature - 273 < 26) {
+        _showTemperatureAlert(temperature);
       }
     } catch (e) {
       print('Error fetching weather data: $e');
+    }
+  }
+
+  Future<void> findCity(String city) async {
+    if (await _controller.findCity(city)) {
+      //snackbar
+      City cityadd = City(cityName: city, favoritescities: false);
+      _dbcontroller.insert(cityadd);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Cidade encontrada'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+      //navigation to details
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DetailsScreenState(cityName: city)));
+    } else {
+      //snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Cidade não encontrada'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+      _cityController.clear();
     }
   }
 
@@ -57,52 +91,57 @@ class SearchScreenStateState extends State<SearchScreenState> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Screen'),
+        title: const Text('Search Screen'),
       ),
-      body: Center( // Center widget added
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Center alignment added
-          children: [
-            TextFormField(
-              controller: _cityController,
-              decoration: const InputDecoration(labelText: "Insira a Cidade"),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Insira a Cidade';
-                }
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _fetchWeatherData();
-              },
-              child: Text('Search'),
-            ),const SizedBox(
-                  height: 20,
-                ),
-                // Construir uma exibição do clima.
-                _controller.weatherList.isEmpty
-                    ? 
-                    Column(
-                      children: [
-                          const Text('Sem dados de clima'),
-                          IconButton(icon: const Icon(Icons.refresh),
-                          onPressed: () => 
-                          _fetchWeatherData(),
-                        )
-                      ],
-                    )
-                    : Column(
-                        children: [
-                          Text('Cidade: ${_controller.weatherList.last.name}'),
-                          Text('Main: ${_controller.weatherList.last.main}'),
-                          Text('Descrição: ${_controller.weatherList.last.description}'),
-                          Text('Temperatura: ${_controller.weatherList.last.temp.toString()} °C'),
-                          Text('Temperatura Máxima: ${_controller.weatherList.last.tempMax.toString()} °C'),
-                          Text('Temperatura Mínima: ${_controller.weatherList.last.tempMin.toString()} °C'),
-                        ],
-                      ),
-          ],
+      body: Center(
+        // Center widget added
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, // Center alignment added
+            children: [
+              TextFormField(
+                controller: _cityController,
+                decoration: const InputDecoration(labelText: "Insira a Cidade"),
+                validator: (value) {
+                  if (value!.trim().isEmpty) {
+                    return 'Insira a Cidade';
+                  }
+                  return null;
+                },
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    findCity(_cityController.text);
+                  }
+                },
+                child: const Text('Search'),
+                
+              ),
+              const SizedBox(height: 20,),
+                      
+                    Expanded(
+                        child:FutureBuilder(
+                          future: _dbcontroller.list(), 
+                          builder: (context,snapshot){
+                            if(snapshot.connectionState == ConnectionState.done){
+                              return ListView.builder(
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index){
+                                  final city = snapshot.data![index];
+                                  return ListTile(
+                                    title: Text(city.cityName),
+                                    onTap: () {
+                                       findCity(city.cityName);
+                                    });
+                                });
+                            }else{
+                              return const Text("Sem Histórico");
+                            }
+                          }))
+            ],
+          ),
         ),
       ),
     );
