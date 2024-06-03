@@ -19,8 +19,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _produtoController.loadProdutos();
-    _produtoController.saveProdutos();
-  }
+c  }
 
   void _adicionarProduto() {
     final id = _produtoController.produtos.length;

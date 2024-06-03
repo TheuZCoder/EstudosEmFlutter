@@ -28,6 +28,7 @@ class ProdutoController {
     // Converte os objetos JSON em instâncias de Produto e adiciona à lista de produtos
     _produtos.addAll(jsonList.map((e) => Produto.fromJson(e)));
   }
+  
 
 
   // Método para salvar produtos no arquivo JSON

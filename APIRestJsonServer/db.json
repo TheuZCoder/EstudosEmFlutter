@@ -1,0 +1,29 @@
+{
+    "produto":[
+        {
+            "id":1,
+            "nome":"Coca-Cola",
+            "preco":5.00
+        },
+        {
+            "id":2,
+            "nome":"Pepsi",
+            "preco":4.50
+        },
+        {
+            "id":3,
+            "nome":"Fanta",
+            "preco":4.00
+        },
+        {
+            "id":4,
+            "nome":"Guaraná",
+            "preco":3.50
+        },
+        {
+            "id":5,
+            "nome":"Sprite",
+            "preco":3.00
+        }
+    ]
+}
