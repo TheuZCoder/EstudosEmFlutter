@@ -4,11 +4,10 @@ import 'package:projeto_firebase/firebase_options.dart';
 import 'package:projeto_firebase/view/home.dart';
 import 'package:projeto_firebase/view/login.dart';
 import 'package:projeto_firebase/view/registar.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options:DefaultFirebaseOptions.currentPlatform
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MainApp());
 }
@@ -20,10 +19,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
       routes: {
-        '/login': (context) => const LoginScreen(),
-        '/registrar': (context) => const RegistrarScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/home':(context)=> const HomeScreen(),
+        '/login':(context) => const LoginScreen(),
+        '/register':(context) => const RegisterScreen(),
       },
     );
   }
