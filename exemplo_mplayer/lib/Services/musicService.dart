@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:exemplo_mplayer/Models/musicModel.dart';
 import 'package:http/http.dart' as http;
 
