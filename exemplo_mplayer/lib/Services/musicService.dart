@@ -3,8 +3,7 @@ import 'package:exemplo_mplayer/Models/musicModel.dart';
 import 'package:http/http.dart' as http;
 
 class musicService {
-  final String url = 'http://localhost:3000/music';
-  final Uri uri = Uri.parse('http://localhost:3000/music');
+  final Uri uri = Uri.parse('http://192.168.56.1:3000/music');
   
 
   List<musicModel> _listMusic = [];
