@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:projeto_firebase/controller/TodoListController.dart';
 import 'package:projeto_firebase/service/AuthService.dart';
 
+import '../model/TodolistModel.dart';
+
 class TodolistScreen extends StatefulWidget {
   final User user;
   const TodolistScreen({super.key, required this.user});
@@ -50,33 +52,21 @@ class _TodolistScreenState extends State<TodolistScreen> {
           ElevatedButton(
             onPressed: () {
               if (_tarefaController.text.isNotEmpty) {
-                _controller.addTarefa(
+                _controller.addTarefa(Todolist(
+                  id: '',
                   userId: widget.user.uid,
                   titulo: _tarefaController.text,
-                );
+                  timestamp: DateTime.now(),
+                ));
+                _tarefaController.clear();
               } else {
-                //exibir um snackbar
+                
                 
               }
             },
             child: const Text('Adicionar'),
           ),
-          //listar tarefas
-          //listar as tarefas do usuario
-          //chamar o metodo listarTarefas
-          //passar o id do usuario
-          //listar as tarefas
-          //exibir as tarefas em uma lista
-          //exibir o titulo da tarefa
-          //exibir a data da tarefa
-          //exibir um botao para deletar a tarefa
-          //chamar o metodo deletarTarefa
-          //passar o id da tarefa
-          //passar o id do usuario
         ],
-        
-
-        
       ),
     );
   }

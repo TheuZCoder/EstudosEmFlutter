@@ -10,18 +10,17 @@ class Todolist {
   // toMap
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'titulo': titulo,
-      'userId': userId,
+      'userid': userId,
       'timestamp': timestamp
     };
   }
   // fromJson
-  factory Todolist.fromJson(Map<String, dynamic> json) {
+  factory Todolist.fromJson(Map<String, dynamic> json, String id) {
     return Todolist(
-      id: json['id'],
+      id: id,
       titulo: json['titulo'],
-      userId: json['userId'],
+      userId: json['userid'],
       timestamp: json['timestamp'].toDate()
     );
   }

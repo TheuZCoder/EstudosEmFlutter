@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:projeto_firebase/service/AuthService.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -23,7 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       //formulario de registro
-      body:Padding(padding: EdgeInsets.all(8),
+      body:Padding(padding: const EdgeInsets.all(8),
       child: Center(
         child: Form(
           key: _formKey,
@@ -47,8 +45,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 validator: (value) {},),
                 const SizedBox(height: 20,),
                 ElevatedButton(
-                  onPressed: (){ _registrarUser();},
-                  child: Text('Registrar'),
+                  onPressed: (){ _registrarUser();
+                  Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  child: const Text('Registrar'),
                 )]
           )),
       ),)
@@ -64,7 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           //navegação para págian interna
       }else{
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('As senhas não conferem!'),
           ),
         );
